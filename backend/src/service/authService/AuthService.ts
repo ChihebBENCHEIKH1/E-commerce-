@@ -56,7 +56,7 @@ export class AuthService {
       otpSecret,
       otpExpiry,
     });
-    console.log("OTP secret:", otpSecret);
+
     //await sendOTPEmail(email, otpSecret);
   }
 
