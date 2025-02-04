@@ -10,7 +10,6 @@ export const captchaHelper = {
 
     try {
       const result = await axios.post(verifyUrl, null, { params });
-      console.log(result.data);
       return result.data.success;
     } catch (error) {
       console.error("CAPTCHA verification failed", error);

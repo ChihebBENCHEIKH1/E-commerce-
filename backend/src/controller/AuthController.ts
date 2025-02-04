@@ -25,10 +25,10 @@ export class AuthController {
 
   async login(req: Request, res: Response): Promise<void> {
     try {
-      const { username, password, recaptcha, otp } = req.body;
+      const { email, password, recaptcha, otp } = req.body;
 
       const token = await this.authService.login(
-        username,
+        email,
         password,
         recaptcha,
         otp

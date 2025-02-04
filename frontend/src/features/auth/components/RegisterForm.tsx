@@ -8,7 +8,8 @@ import MUIAutocomplete from "../../../common/components/form/MUIAutocomplete";
 import ReCAPTCHACheckBox from "../../../common/components/ReCAPTCHACheckBox";
 import { UserCredentials } from "../types/type";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../slices/AuthSlice";
+import { registerUser } from "../thunks/AuthThunk";
+
 const FormContainer = styled.div`
   padding: 2rem;
   text-align: center;

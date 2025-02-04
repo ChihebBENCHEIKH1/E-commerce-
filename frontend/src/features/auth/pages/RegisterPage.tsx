@@ -1,5 +1,4 @@
 import React from "react";
-import LoginForm from "../components/RegisterForm";
 import styled from "styled-components";
 import RegisterForm from "../components/RegisterForm";
 
