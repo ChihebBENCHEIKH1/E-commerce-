@@ -2,19 +2,19 @@ import bcrypt from "bcryptjs";
 import { faker } from "@faker-js/faker";
 import { connectDb, disconnectDb } from "../utils/db";
 import { UserModel } from "../models/user/User";
-import { getEnvVar } from "../utils/helper";
 import dotenv from "dotenv";
+import { MONGO_URI, SALT_ROUNDS } from "../config/env";
 dotenv.config();
 
 async function hashPassword(password: string): Promise<string> {
-  const saltRounds = Number(getEnvVar("SALT_ROUNDS", 10));
+  const saltRounds = Number(SALT_ROUNDS);
   const salt = await bcrypt.genSalt(saltRounds);
   return await bcrypt.hash(password, salt);
 }
 
 async function seedUsers() {
   try {
-    const dbUri = getEnvVar("MONGO_URI");
+    const dbUri = MONGO_URI;
     console.log("Seeding random users...", dbUri);
     await connectDb(String(dbUri));
 

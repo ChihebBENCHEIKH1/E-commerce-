@@ -1,7 +1,7 @@
 // src/middleware/authMiddleware.ts
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { getEnvVar } from "../utils/helper";
+import { JWT_SECRET } from "../config/env";
 
 export function authMiddleware(
   req: Request,
@@ -15,7 +15,7 @@ export function authMiddleware(
   }
 
   try {
-    const decoded = jwt.verify(token, getEnvVar("JWT_SECRET"));
+    const decoded = jwt.verify(token, String(JWT_SECRET));
     req.user = decoded;
     next();
   } catch (error) {

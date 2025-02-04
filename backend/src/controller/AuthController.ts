@@ -9,8 +9,14 @@ export class AuthController {
 
   async register(req: Request, res: Response): Promise<void> {
     try {
-      const { username, password } = req.body;
-      await this.authService.register(username, password);
+      const { email, firstName, lastName, recaptcha, country } = req.body;
+      await this.authService.register({
+        email,
+        firstName,
+        lastName,
+        recaptcha,
+        country,
+      });
       res.status(201).json({ message: "User registered successfully" });
     } catch (error: any) {
       res.status(400).json({ error: error.message });
@@ -19,11 +25,33 @@ export class AuthController {
 
   async login(req: Request, res: Response): Promise<void> {
     try {
-      const { username, password } = req.body;
-      const token = await this.authService.login(username, password);
+      const { username, password, recaptcha, otp } = req.body;
+
+      const token = await this.authService.login(
+        username,
+        password,
+        recaptcha,
+        otp
+      );
       res.json({ token });
     } catch (error) {
       res.status(401).json({ error: "Invalid credentials" });
+    }
+  }
+
+  async resetPasswordWithOTP(req: Request, res: Response): Promise<void> {
+    try {
+      const { email, otp, newPassword } = req.body;
+
+      const isOtpValid = await this.authService.verifyUserOTP(email, otp);
+      if (!isOtpValid) {
+        throw new Error("Invalid OTP");
+      }
+
+      await this.authService.updatePassword(email, newPassword);
+      res.status(200).json({ message: "Password updated successfully" });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message || "Password reset failed" });
     }
   }
 }
