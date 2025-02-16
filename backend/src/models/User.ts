@@ -1,20 +1,27 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-import { IUser } from "./IUser";
-import { SALT_ROUNDS } from "../../config/env";
+import { IUser } from "./interfaces/IUser";
+import { SALT_ROUNDS } from "../config/env";
 
 const userSchema = new Schema<IUser>({
-  firstName: { type: String, required: true, unique: true },
+  firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: false },
-  role: { type: String, required: true, enum: ["admin", "user"] },
+  role: { type: String, required: true, enum: ["ADMIN", "USER"] },
   country: { type: Number, required: true },
   otpSecret: { type: String, required: false },
   otpExpiry: { type: Date, required: false },
   otpVerified: { type: Boolean, default: false },
+  refreshToken: { type: String, required: false },
+  resetPasswordToken: { type: String, required: false },
+  resetPasswordExpires: { type: Date, required: false },
+  activated: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
+
+userSchema.index({ refreshToken: 1 });
 
 userSchema.pre<IUser>("save", async function (next) {
   if (this.isModified("password")) {
@@ -25,6 +32,12 @@ userSchema.pre<IUser>("save", async function (next) {
       return next(error as Error);
     }
   }
+
+  if (!this.createdAt) {
+    this.createdAt = new Date();
+  }
+  this.updatedAt = new Date();
+
   next();
 });
 
