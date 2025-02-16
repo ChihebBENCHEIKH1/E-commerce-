@@ -1,7 +1,7 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsNumber, IsString } from "class-validator";
 
 export class RegisterDTO {
-  @IsString()
+  @IsEmail()
   email!: string;
 
   @IsString()
@@ -13,6 +13,15 @@ export class RegisterDTO {
   @IsNumber()
   country!: number;
 
+  @IsBoolean()
+  marketing: boolean = false;
+
+  @IsBoolean()
+  profiling: boolean = false;
+
   @IsString()
   recaptcha!: string;
+
+  @IsString()
+  role!: string;
 }
