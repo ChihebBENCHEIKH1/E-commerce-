@@ -1,13 +1,17 @@
-// src/routes/index.ts
 import { Router } from "express";
 import { container } from "../config/inversify.config";
-import { AuthRoutes } from "./AuthRoutes";
 import { TYPES } from "../config/inversifyConstants";
+import { IRouter } from "./interfaces/IRouter";
 
 const router = Router();
 
-const authRoutes = container.get<AuthRoutes>(TYPES.AuthRoutes);
+const authRouter = container.getNamed<IRouter>(TYPES.IRouter, "AuthRouter");
+const staticContentRouter = container.getNamed<IRouter>(
+  TYPES.IRouter,
+  "StaticContentRouter"
+);
 
-router.use("/api/auth", authRoutes.router);
+router.use("/api/auth", authRouter.router);
+router.use("/api", staticContentRouter.router);
 
 export default router;

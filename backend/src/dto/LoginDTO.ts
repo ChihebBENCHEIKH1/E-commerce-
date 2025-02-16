@@ -6,11 +6,6 @@ export class LoginDTO {
 
   @IsString()
   password!: string;
-
   @IsString()
   recaptcha!: string;
-
-  @IsOptional()
-  @IsString()
-  otp?: string;
 }

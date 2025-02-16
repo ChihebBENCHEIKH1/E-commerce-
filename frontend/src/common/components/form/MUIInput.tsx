@@ -16,6 +16,7 @@ const MUIInput: React.FC<Props> = ({
   register,
   errors,
   validationRules = {},
+  type = "text",
 }) => {
   return (
     <TextField
@@ -25,6 +26,7 @@ const MUIInput: React.FC<Props> = ({
       {...register(name, validationRules)}
       error={!!errors?.[name]}
       helperText={errors?.[name]?.message}
+      type={type}
     />
   );
 };

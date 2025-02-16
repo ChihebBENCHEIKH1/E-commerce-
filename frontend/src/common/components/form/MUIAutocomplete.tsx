@@ -9,6 +9,7 @@ interface Props {
   errors?: any;
   options: { title: string; value: string }[];
   validationRules?: any;
+  onChange?: (value: any) => void;
 }
 
 const MUIAutocomplete: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const MUIAutocomplete: React.FC<Props> = ({
   errors,
   options,
   validationRules = {},
+  onChange,
 }) => {
   return (
     <Controller
@@ -29,6 +31,12 @@ const MUIAutocomplete: React.FC<Props> = ({
           {...field}
           options={options}
           getOptionLabel={(option) => option.title}
+          onChange={(_, value) => {
+            field.onChange(value);
+            if (onChange) {
+              onChange(value);
+            }
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
