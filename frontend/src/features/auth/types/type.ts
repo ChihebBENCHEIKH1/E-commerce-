@@ -10,13 +10,18 @@ export type UserCredentials = {
   firstName: string;
   lastName: string;
   country: string;
+  role: UserRole;
   marketing?: boolean;
   profiling?: boolean;
   recaptcha: string;
 };
 
-export type ResetPassword = {
-  email: string;
-  otp: string;
+export type ResetPasswordCredentials = {
+  token: string;
   newPassword: string;
 };
+
+export enum UserRole {
+  ADMIN = "ADMIN",
+  USER = "USER",
+}
