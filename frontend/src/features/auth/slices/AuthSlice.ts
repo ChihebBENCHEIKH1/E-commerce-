@@ -53,11 +53,10 @@ const authSlice = createSlice({
         state.error = action.payload || "An error occurred during registration";
         state.message = "";
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginUser.fulfilled, (state) => {
         state.isProcessing = false;
         state.error = null;
         state.message = "";
-        state.user = action.payload.user;
         state.isAuthenticated = true;
         state.isTokenChecked = true;
       })

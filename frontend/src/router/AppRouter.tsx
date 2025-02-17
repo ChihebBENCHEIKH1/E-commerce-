@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
-  getAuthenticatedStatus,
+  getIsAuthenticated,
   getAuthRole,
   getTokenStatus,
 } from "../features/auth/selectors/AuthSelector";
@@ -20,10 +20,13 @@ import ResetPasswordPage from "../features/auth/pages/ResetPasswordPage";
 import { UserRole } from "../features/auth/types/type";
 
 const AppRouter: React.FC = () => {
-  const isAuthenticated = useSelector(getAuthenticatedStatus);
+  const isAuthenticated = useSelector(getIsAuthenticated);
   const isTokenChecked = useSelector(getTokenStatus);
   const isUserAdmin = useSelector(getAuthRole) === UserRole.ADMIN;
-  const defaultRedirectRoute: string = "/MotorcycleXpert/login";
+  const defaultRedirectRoute: string =
+    isAuthenticated && isTokenChecked
+      ? "/MotorcycleXpert/home"
+      : "/MotorcycleXpert/login";
 
   return (
     <Router>
@@ -45,7 +48,7 @@ const AppRouter: React.FC = () => {
               path={route.path}
               element={
                 <CustomRoute
-                  element={route.element}
+                  element={<route.component />}
                   isAuthenticated={isAuthenticated}
                   isTokenChecked={isTokenChecked}
                   redirect={route.redirect}

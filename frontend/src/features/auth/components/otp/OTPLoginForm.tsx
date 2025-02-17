@@ -7,7 +7,7 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 
 import { useNavigate } from "react-router-dom";
 import {
-  getAuthenticatedStatus,
+  getIsAuthenticated,
   getTokenStatus,
 } from "../../selectors/AuthSelector";
 import { verifyOtp } from "../../thunks/AuthThunk";
@@ -52,7 +52,7 @@ const OtpLoginForm: React.FC = () => {
   } = useForm<{ otp: string }>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(getAuthenticatedStatus);
+  const isAuthenticated = useSelector(getIsAuthenticated);
   const isTokenChecked = useSelector(getTokenStatus);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload, verify } from "jsonwebtoken";
 import {
   JWT_EXPIRES_IN,
   JWT_SECRET,
@@ -11,7 +11,7 @@ import { ObjectId } from "mongoose";
 
 export const generateAccessToken = (userId: ObjectId) =>
   jwt.sign({ userId }, String(JWT_SECRET), {
-    expiresIn: Number(JWT_EXPIRES_IN),
+    expiresIn: JWT_EXPIRES_IN as number,
   });
 
 export const generateRefreshToken = (userId: ObjectId) =>
@@ -23,3 +23,7 @@ export const generatePasswordResetToken = (userId: ObjectId) =>
   jwt.sign({ userId }, String(RESET_PASSWORD_SECRET_KEY), {
     expiresIn: Number(RESET_PASSWORD_EXPIRATION_TIME),
   });
+
+export const verifyRefreshToken = (token: string): JwtPayload => {
+  return verify(token, String(REFRESH_TOKEN_SECRET)) as JwtPayload;
+};
