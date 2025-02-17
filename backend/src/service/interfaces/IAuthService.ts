@@ -10,4 +10,7 @@ export interface IAuthService {
   }): Promise<{ token: string; refreshToken: string }>;
   verifyUserOTP(data: { userEmail: string; otp: string }): Promise<void>;
   updatePassword(token: string, newPassword: string): Promise<void>;
+  refreshToken(
+    refreshToken: string
+  ): Promise<{ token: string; refreshToken?: string }>;
 }

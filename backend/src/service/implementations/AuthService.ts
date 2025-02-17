@@ -12,6 +12,7 @@ import {
   generateAccessToken,
   generatePasswordResetToken,
   generateRefreshToken,
+  verifyRefreshToken,
 } from "../../utils/JWTHelper";
 import { IEmailService } from "../interfaces/IEmailService";
 import { IAuthService } from "../interfaces/IAuthService";
@@ -83,7 +84,6 @@ export class AuthService implements IAuthService {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
     if (!isPasswordValid) {
       throw new Error("Invalid credentials");
     }
@@ -125,6 +125,27 @@ export class AuthService implements IAuthService {
       user.email,
       `${FRONTEND_URL}/MotorcycleXpert/reset-password?token=${resetPasswordToken}`
     );
+  }
+
+  async refreshToken(
+    refreshToken: string
+  ): Promise<{ token: string; refreshToken?: string }> {
+    let payload;
+    try {
+      payload = verifyRefreshToken(refreshToken);
+    } catch (error) {
+      throw new Error("Invalid or expired refresh token");
+    }
+
+    const user = await this.userRepository.findUserById(payload.userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return {
+      token: generateAccessToken(user._id),
+      refreshToken: generateRefreshToken(user._id),
+    };
   }
 
   async updatePassword(token: string, newPassword: string): Promise<void> {

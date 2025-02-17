@@ -46,5 +46,9 @@ export class AuthRouter implements IRouter {
       requestValidationMiddleware(ResetPasswordDTO),
       (req, res) => this.authController.resetPassword(req, res)
     );
+
+    this.router.post("/refresh", (req, res) =>
+      this.authController.refreshToken(req, res)
+    );
   }
 }
