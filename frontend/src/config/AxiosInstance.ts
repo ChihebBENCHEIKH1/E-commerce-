@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -34,13 +34,13 @@ axiosInstance.interceptors.response.use(
       if (refreshToken) {
         try {
           const { data } = await axios.post(
-            `${BACKEND_URL}/api/refresh-token`,
+            `${BACKEND_URL}/api/auth/refresh-token`,
             {
               refreshToken,
             }
           );
 
-          localStorage.setItem("access_token", data.accessToken);
+          localStorage.setItem("token", data.accessToken);
           localStorage.setItem("refresh_token", data.refreshToken);
 
           originalRequest.headers[
@@ -50,12 +50,12 @@ axiosInstance.interceptors.response.use(
         } catch (refreshError) {
           console.error("Refresh token failed:", refreshError);
 
-          localStorage.removeItem("access_token");
+          localStorage.removeItem("token");
           localStorage.removeItem("refresh_token");
           navigate("/login");
         }
       } else {
-        localStorage.removeItem("access_token");
+        localStorage.removeItem("token");
         localStorage.removeItem("refresh_token");
         navigate("/login");
       }

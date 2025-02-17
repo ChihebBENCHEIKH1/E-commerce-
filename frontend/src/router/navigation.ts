@@ -23,6 +23,6 @@ export const navigationRoutes: CustomRouteProps[] = [
     secured: false,
     isUserAdmin: false,
     exact: true,
-    path: "/MotorcycleXpert/home",
+    path: "MotorcycleXpert/home",
   },
 ];
