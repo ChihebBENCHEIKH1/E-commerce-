@@ -1,7 +1,5 @@
 import { Container } from "inversify";
 import { TYPES } from "./inversifyConstants";
-import { IUserRepository } from "../repository/user/interfaces/IUserRepository";
-import { UserRepository } from "../repository/user/implementations/UserRepository";
 import { AuthService } from "../service/implementations/AuthService";
 import { AuthController } from "../controller/implementations/AuthController";
 import { StaticContentRouter } from "../routes/implementations/StaticContentRouter";
@@ -11,6 +9,8 @@ import { IEmailService } from "../service/interfaces/IEmailService";
 import { IAuthService } from "../service/interfaces/IAuthService";
 import { IRouter } from "../routes/interfaces/IRouter";
 import { IAuthController } from "../controller/interfaces/IAuthcontroller";
+import { IUserRepository } from "../repository/interfaces/IUserRepository";
+import { UserRepository } from "../repository/implementations/UserRepository";
 
 const container = new Container();
 
