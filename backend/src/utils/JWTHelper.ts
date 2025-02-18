@@ -27,3 +27,6 @@ export const generatePasswordResetToken = (userId: ObjectId) =>
 export const verifyRefreshToken = (token: string): JwtPayload => {
   return verify(token, String(REFRESH_TOKEN_SECRET)) as JwtPayload;
 };
+
+export const verifyAccessToken = (token: string): JwtPayload =>
+  verify(token, String(JWT_SECRET)) as JwtPayload;

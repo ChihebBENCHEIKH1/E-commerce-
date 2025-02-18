@@ -1,8 +1,7 @@
-import { IUser } from "../../../models/interfaces/IUser";
+import { IUser } from "../../models/interfaces/IUser";
 
 export interface IUserRepository {
-  // Create a new user
-  createUser(userData: {
+  create(userData: {
     firstName: string;
     lastName: string;
     email: string;
@@ -37,4 +36,5 @@ export interface IUserRepository {
 
   deleteUser(userId: string): Promise<boolean>;
   findUserByResetPasswordToken(token: string): Promise<IUser | null>;
+  save(user: IUser): Promise<IUser>;
 }

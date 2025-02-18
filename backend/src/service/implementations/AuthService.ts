@@ -1,6 +1,5 @@
 import { inject, injectable } from "inversify";
 import bcrypt from "bcryptjs";
-import { IUserRepository } from "../../repository/user/interfaces/IUserRepository";
 import { TYPES } from "../../config/inversifyConstants";
 import { FRONTEND_URL, RECAPTCHA_SECRET_KEY } from "../../config/env";
 import { captchaHelper } from "../../utils/captchaCheck";
@@ -12,11 +11,14 @@ import {
   generateAccessToken,
   generatePasswordResetToken,
   generateRefreshToken,
+  verifyAccessToken,
   verifyRefreshToken,
 } from "../../utils/JWTHelper";
 import { IEmailService } from "../interfaces/IEmailService";
 import { IAuthService } from "../interfaces/IAuthService";
 import moment from "moment";
+import { IUserRepository } from "../../repository/interfaces/IUserRepository";
+import { IUser } from "../../models/interfaces/IUser";
 
 @injectable()
 export class AuthService implements IAuthService {
@@ -24,6 +26,29 @@ export class AuthService implements IAuthService {
     @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
     @inject(TYPES.IEmailService) private emailService: IEmailService
   ) {}
+  getLoggedInUser(userId: string): Promise<IUser | null> {
+    return this.userRepository.findUserById(userId);
+  }
+  async logout(userId: string, refreshToken: string): Promise<void> {
+    let refreshTokenPayload;
+    try {
+      refreshTokenPayload = verifyRefreshToken(refreshToken);
+    } catch (error) {
+      throw new Error("Invalid or expired refresh token");
+    }
+
+    if (userId !== refreshTokenPayload.userId) {
+      throw new Error("Tokens do not match");
+    }
+
+    const user = await this.userRepository.findUserById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.refreshToken = "";
+    await this.userRepository.save(user);
+  }
 
   async verifyCaptcha(captchaResponse: string): Promise<boolean> {
     return captchaHelper.verifyCaptcha(
@@ -52,7 +77,7 @@ export class AuthService implements IAuthService {
 
     const { otp, otpSecret, otpExpiry } = generateOTP();
 
-    await this.userRepository.createUser({
+    await this.userRepository.create({
       firstName,
       lastName,
       email,
@@ -119,7 +144,7 @@ export class AuthService implements IAuthService {
     user.otpVerified = true;
     user.resetPasswordToken = resetPasswordToken;
     user.resetPasswordExpires = moment().add(1, "hour").toDate();
-    await user.save();
+    await this.userRepository.save(user);
 
     this.sendResetPasswordEmail(
       user.email,
@@ -162,7 +187,7 @@ export class AuthService implements IAuthService {
       user.activated = true;
     }
 
-    await user.save();
+    await this.userRepository.save(user);
   }
 
   private async sendOTPEMail(email: string, otp: string): Promise<void> {
