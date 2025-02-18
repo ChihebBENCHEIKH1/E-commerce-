@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { UserCredentials } from "../../types/type";
 import { loginUser } from "../../thunks/AuthThunk";
 import MUIInput from "../../../../common/components/form/MUIInput";
 import ReCAPTCHACheckBox from "../../../../common/components/ReCAPTCHACheckBox";
+import { getIsAuthenticated } from "../../selectors/AuthSelector";
 
 const FormContainer = styled.div`
   padding: 2rem;
@@ -55,6 +56,14 @@ const LoginForm: React.FC = () => {
     formState: { errors },
   } = useForm<UserCredentials>();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector(getIsAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/MotorcycleXpert/home");
+    }
+  }, [isAuthenticated]);
 
   const onSubmit = async (formData: UserCredentials) => {
     if (!formData.recaptcha) {

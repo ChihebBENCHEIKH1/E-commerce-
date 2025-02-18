@@ -9,6 +9,7 @@ import { VerifyOTPDTO } from "../../dto/VerifyOTPDTO";
 import { resetPasswordTokenMiddleware } from "../../middleware/resetPasswordMiddleware";
 import { IRouter } from "../interfaces/IRouter";
 import { IAuthController } from "../../controller/interfaces/IAuthcontroller";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 @injectable()
 export class AuthRouter implements IRouter {
@@ -45,6 +46,18 @@ export class AuthRouter implements IRouter {
       resetPasswordTokenMiddleware,
       requestValidationMiddleware(ResetPasswordDTO),
       (req, res) => this.authController.resetPassword(req, res)
+    );
+
+    this.router.post("/refresh", (req, res) =>
+      this.authController.refreshToken(req, res)
+    );
+
+    this.router.post("/logout", (req, res) =>
+      this.authController.logout(req, res)
+    );
+
+    this.router.get("/me", authMiddleware, (req, res) =>
+      this.authController.getLoggedInUser(req, res)
     );
   }
 }

@@ -1,6 +1,6 @@
 import { AppState } from "../../../store/store";
 
-export const getAuthenticatedStatus = (state: AppState) =>
+export const getIsAuthenticated = (state: AppState) =>
   state.auth.isAuthenticated;
 export const getTokenStatus = (state: AppState) => state.auth.isTokenChecked;
 export const getIsAuthProcessing = (state: AppState) => state.auth.isProcessing;

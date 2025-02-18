@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { TYPES } from "../../config/inversifyConstants";
 import { IAuthService } from "../../service/interfaces/IAuthService";
 import { IAuthController } from "../interfaces/IAuthcontroller";
+import { verifyAccessToken } from "../../utils/JWTHelper";
+import UserResource from "../../resource/UserResource";
 
 @injectable()
 export class AuthController implements IAuthController {
@@ -46,6 +48,21 @@ export class AuthController implements IAuthController {
     }
   }
 
+  async refreshToken(req: Request, res: Response): Promise<void> {
+    try {
+      const { refreshToken } = req.body;
+      if (!refreshToken) {
+        res.status(400).json({ message: "Refresh token is required" });
+        return;
+      }
+
+      const response = await this.authService.refreshToken(refreshToken);
+      res.status(200).json(response);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   async resetPassword(req: Request, res: Response): Promise<void> {
     try {
       const { token, newPassword } = req.body;
@@ -54,5 +71,32 @@ export class AuthController implements IAuthController {
     } catch (error: any) {
       res.status(400).json({ error: error.message || "Password reset failed" });
     }
+  }
+
+  async getLoggedInUser(req: any, res: Response): Promise<void> {
+    try {
+      const user = await this.authService.getLoggedInUser(req.userId);
+      if (user) {
+        res.status(200).json(new UserResource(user));
+      }
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async logout(req: Request, res: Response): Promise<void> {
+    const accessToken = req.headers.authorization?.split(" ")[1] as string;
+    const refreshToken = req.body.refreshToken;
+
+    let accessTokenPayload;
+    try {
+      accessTokenPayload = verifyAccessToken(accessToken);
+    } catch (error) {
+      throw new Error("Invalid or expired access token");
+    }
+
+    await this.authService.logout(accessTokenPayload.userId, refreshToken);
+
+    res.status(200).json({ message: "Logged out successfully" });
   }
 }
