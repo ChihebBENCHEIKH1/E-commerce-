@@ -12,3 +12,4 @@ export const getIsOTPVerified = (state: AppState) => state.auth.isOTPVerified;
 export const getIsUserCreated = (state: AppState) => state.auth.isUserCreated;
 export const getIsPasswordReset = (state: AppState) =>
   state.auth.isPasswordReset;
+export const getLoggedInUser = (state: AppState) => state.auth.user;

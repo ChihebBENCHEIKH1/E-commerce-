@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   appInit,
+  getLoggedInUser,
   loginUser,
+  logout,
   registerUser,
   resetPassword,
   verifyOtp,
@@ -103,6 +105,33 @@ const authSlice = createSlice({
       .addCase(resetPassword.pending, (state) => {
         state.isProcessing = true;
         state.error = null;
+        state.message = "";
+      })
+      .addCase(getLoggedInUser.fulfilled, (state, action) => {
+        state.isProcessing = false;
+        state.error = null;
+        state.user = action.payload.data.user;
+      })
+      .addCase(getLoggedInUser.rejected, (state, action) => {
+        state.isProcessing = false;
+        state.error = action.payload || "An error occurred during login";
+        state.message = "";
+      })
+      .addCase(getLoggedInUser.pending, (state) => {
+        state.isProcessing = true;
+        state.error = null;
+        state.message = "";
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.isProcessing = false;
+        state.error = null;
+        state.message = "";
+        state.isAuthenticated = false;
+        state.isTokenChecked = true;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isProcessing = false;
+        state.error = action.payload || "An error occurred during login";
         state.message = "";
       });
   },
