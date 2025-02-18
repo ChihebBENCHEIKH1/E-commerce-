@@ -1,12 +1,16 @@
 import bcrypt from "bcryptjs";
 import { injectable } from "inversify";
+import { UserModel } from "../../models/User";
+import { IUser } from "../../models/interfaces/IUser";
+import { SALT_ROUNDS } from "../../config/env";
 import { IUserRepository } from "../interfaces/IUserRepository";
-import { UserModel } from "../../../models/User";
-import { IUser } from "../../../models/interfaces/IUser";
-import { SALT_ROUNDS } from "../../../config/env";
 
 @injectable()
 export class UserRepository implements IUserRepository {
+  save(userData: IUser): Promise<IUser> {
+    const user = new UserModel(userData);
+    return user.save();
+  }
   updateResetPasswordToken(
     email: string,
     resetPasswordToken: string,
@@ -26,7 +30,7 @@ export class UserRepository implements IUserRepository {
   deleteUser(userId: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
-  async createUser(userData: {
+  async create(userData: {
     firstName: string;
     lastName: string;
     email: string;

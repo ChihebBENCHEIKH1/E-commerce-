@@ -1,4 +1,5 @@
 import { RegisterDTO } from "../../dto/RegisterDTO";
+import { IUser } from "../../models/interfaces/IUser";
 
 export interface IAuthService {
   verifyCaptcha(captchaResponse: string): Promise<boolean>;
@@ -13,4 +14,6 @@ export interface IAuthService {
   refreshToken(
     refreshToken: string
   ): Promise<{ token: string; refreshToken?: string }>;
+  logout(userId: string, refreshToken: string): Promise<void>;
+  getLoggedInUser(accessToken: string): Promise<IUser | null>;
 }
