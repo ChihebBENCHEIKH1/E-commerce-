@@ -1,0 +1,10 @@
+{
+  "validUser": {
+    "email": "ligira5332@jarars.com",
+    "password": "test1234"
+  },
+  "invalidUser": {
+    "email": "invalid-email",
+    "password": "123"
+  }
+}
