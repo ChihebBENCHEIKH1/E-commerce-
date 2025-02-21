@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import FeaturedModels from "../components/featuredModels/FeaturedModels";
+import Hero from "../components/hero/Hero";
+import Layout from "../../../common/layout/Layout";
+import { useDispatch } from "react-redux";
+import { getLoggedInUser } from "../../auth/thunks/AuthThunk";
 
 const HomePage: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getLoggedInUser());
+  }, []);
+
   return (
-    <div>
-      <h1>Welcome to Our E-Commerce Store</h1>
-      <p>Discover our amazing products and deals!</p>
-    </div>
+    <Layout>
+      <Hero />
+      <FeaturedModels />
+    </Layout>
   );
 };
 

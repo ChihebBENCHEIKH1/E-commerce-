@@ -2,6 +2,8 @@ import { ResetPasswordCredentials } from "./../types/type";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   authenticateUserService,
+  getLoggedInUserService,
+  logoutService,
   registerUserService,
   resetPasswordService,
   verifyOtpService,
@@ -72,6 +74,27 @@ export const resetPassword = createAsyncThunk(
   async (credentials: ResetPasswordCredentials) => {
     try {
       const response = await resetPasswordService(credentials);
+      return response;
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);
+
+export const logout = createAsyncThunk("auth/logout", async () => {
+  try {
+    const response = await logoutService();
+    return response;
+  } catch (error) {
+    throw error?.response?.data;
+  }
+});
+
+export const getLoggedInUser = createAsyncThunk(
+  "auth/loggedInUser",
+  async () => {
+    try {
+      const response = await getLoggedInUserService();
       return response;
     } catch (error) {
       throw error?.response?.data;

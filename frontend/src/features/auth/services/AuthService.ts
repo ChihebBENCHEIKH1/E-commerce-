@@ -61,3 +61,27 @@ export const refreshTokenService = async () => {
     throw error?.response?.data;
   }
 };
+
+export const logoutService = async () => {
+  try {
+    const refreshToken = localStorage.getItem("refreshToken");
+    console.log(refreshToken);
+    const response = await axiosInstance.post(`/auth/logout`, {
+      refreshToken,
+    });
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    return response.data;
+  } catch (error) {
+    throw error?.response?.data;
+  }
+};
+
+export const getLoggedInUserService = async () => {
+  try {
+    const response = await axiosInstance.get(`/auth/me`);
+    return response.data;
+  } catch (error) {
+    throw error?.response?.data;
+  }
+};
