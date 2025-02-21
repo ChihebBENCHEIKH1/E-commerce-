@@ -11,13 +11,17 @@ import {
 } from "@mui/material";
 import { useGetMotorcyclesQuery } from "../../../../services/motorcyclesApi";
 import SideDrawer from "../../../../common/components/SideDrawer";
+import { setSelectedMotorcycle } from "../../slices/homeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getSelectedMotorcycle } from "../../selectors/homeSelector";
 
 const FeaturedModels = () => {
+  const dispatch = useDispatch();
+  const selectedMotorcycle = useSelector(getSelectedMotorcycle);
   const [page, setPage] = useState(1);
   const limit = 10;
   const [motorcyclesList, setMotorcyclesList] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedMotorcycle, setSelectedMotorcycle] = useState(null);
 
   const { data: motorcycles, isFetching } = useGetMotorcyclesQuery({
     page,
@@ -35,7 +39,7 @@ const FeaturedModels = () => {
   };
 
   const handleCardClick = (motorcycle) => {
-    setSelectedMotorcycle(motorcycle);
+    dispatch(setSelectedMotorcycle(motorcycle));
     setIsDrawerOpen(true);
   };
 
@@ -120,11 +124,13 @@ const FeaturedModels = () => {
         </Button>
       </Box>
 
-      <SideDrawer
-        isOpen={isDrawerOpen}
-        onClose={handleDrawerClose}
-        motorcycle={selectedMotorcycle}
-      />
+      {selectedMotorcycle && (
+        <SideDrawer
+          isOpen={isDrawerOpen}
+          onClose={handleDrawerClose}
+          motorcycle={selectedMotorcycle}
+        />
+      )}
     </Container>
   );
 };

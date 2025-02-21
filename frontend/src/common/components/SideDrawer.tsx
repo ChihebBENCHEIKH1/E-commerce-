@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Drawer,
   Box,
@@ -9,6 +9,12 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { createPaymentIntent } from "../../features/home/thunks/homeThunk";
+import { getClientSecret } from "../../features/home/selectors/homeSelector";
+import { useNavigate } from "react-router-dom";
+import { getLoggedInUser } from "../../features/auth/selectors/AuthSelector";
+import { getSelectedMotorcycle } from "../../features/home/selectors/homeSelector";
 
 const DrawerContainer = styled(Box)`
   background-color: #f5f5f5;
@@ -34,6 +40,9 @@ type Props = {
   motorcycle: any;
 };
 const SideDrawer = ({ isOpen, onClose, motorcycle }: Props) => {
+  const navigate = useNavigate();
+  const initiatePaymentProcess = () => navigate("/MotorcycleXpert/checkout");
+
   return (
     <Drawer
       anchor="right"
@@ -79,7 +88,13 @@ const SideDrawer = ({ isOpen, onClose, motorcycle }: Props) => {
             <Typography variant="h6" sx={{ mb: 2 }}>
               Price: {motorcycle.price}
             </Typography>
-            <Button variant="contained" color="error" fullWidth sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              color="error"
+              fullWidth
+              sx={{ mt: 2 }}
+              onClick={initiatePaymentProcess}
+            >
               Buy Now
             </Button>
           </DrawerContent>
