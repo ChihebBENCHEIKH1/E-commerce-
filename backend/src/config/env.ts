@@ -21,3 +21,7 @@ export const RESET_PASSWORD_EXPIRATION_TIME = getEnvVar(
   "RESET_PASSWORD_EXPIRATION_TIME"
 ) as number;
 export const FRONTEND_URL = getEnvVar("FRONTEND_URL");
+export const STRIPE_SECRET_KEY = getEnvVar("STRIPE_SECRET_KEY");
+export const SENTRY_DSN = getEnvVar("SENTRY_DSN");
+export const NODE_ENV = getEnvVar("NODE_ENV");
+export const SENTRY_RELEASE = getEnvVar("SENTRY_RELEASE");

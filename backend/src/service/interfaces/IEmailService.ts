@@ -3,6 +3,7 @@ export interface IEmailService {
     email: string,
     subject: string,
     text: string,
-    html: string
+    html: string,
+    attachments?: { filename: string; path: string }[]
   ): Promise<void>;
 }

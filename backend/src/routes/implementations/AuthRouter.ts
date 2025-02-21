@@ -6,10 +6,10 @@ import { RegisterDTO } from "../../dto/RegisterDTO";
 import { LoginDTO } from "../../dto/LoginDTO";
 import { ResetPasswordDTO } from "../../dto/ResetPasswordDTO";
 import { VerifyOTPDTO } from "../../dto/VerifyOTPDTO";
-import { resetPasswordTokenMiddleware } from "../../middleware/resetPasswordMiddleware";
 import { IRouter } from "../interfaces/IRouter";
 import { IAuthController } from "../../controller/interfaces/IAuthcontroller";
 import { authMiddleware } from "../../middleware/authMiddleware";
+import { resetPasswordTokenMiddleware } from "../../middleware/resetPasswordMiddleware";
 
 @injectable()
 export class AuthRouter implements IRouter {
