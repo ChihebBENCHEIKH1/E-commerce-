@@ -15,7 +15,7 @@ export const RegisterPage = lazy(
 export const Login = lazy(() => import("../features/auth/pages/LoginPage"));
 
 const HomePage = lazy(() => import("../features/home/pages/HomePage"));
-
+const Checkout = lazy(() => import("../features/payment/pages/CheckoutPage"));
 export const navigationRoutes: CustomRouteProps[] = [
   {
     component: HomePage,
@@ -24,5 +24,13 @@ export const navigationRoutes: CustomRouteProps[] = [
     isUserAdmin: false,
     exact: true,
     path: "MotorcycleXpert/home",
+  },
+  {
+    component: Checkout,
+    redirect: "/",
+    secured: false,
+    isUserAdmin: false,
+    exact: true,
+    path: "MotorcycleXpert/checkout",
   },
 ];
