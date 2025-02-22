@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import { faker } from "@faker-js/faker";
 import { connectDb, disconnectDb } from "../utils/db";
-import { UserModel } from "../models/user/User";
 import dotenv from "dotenv";
 import { MONGO_URI, SALT_ROUNDS } from "../config/env";
+import { UserModel } from "../models/User";
 dotenv.config();
 
 async function hashPassword(password: string): Promise<string> {
