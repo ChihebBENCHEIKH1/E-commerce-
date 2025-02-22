@@ -112,13 +112,9 @@ The Motorcycle Dealership app is designed as a modern full-stack solution for br
     ```
 ### Frontend Tests (Cypress)
 
-2. **Open Cypress GUI:**
+1. **Open Cypress GUI:**
    ```bash
    npx cypress open
-    ```
-3. **Or run tests headlessly:**
-   ```bash
-  npm run cypress:run
     ```
 ## Deployment
 
