@@ -126,12 +126,35 @@ The project includes Docker configurations for seamless deployment. To run both 
 
 ### Backend
 
-backend/ ├── src/ │ ├── config/ # Application configuration (e.g., DB, environment settings) │ ├── controllers/ # API route controllers │ ├── service/ # Business logic and service layer │ ├── models/ # Data models/schemas │ ├── dto/ # Data Transfer Objects for incoming requests │ ├── resource/ # Response formatting and transformation │ ├── repository/ # Data access layer (repositories) │ ├── utils/ # Utility functions and helpers │ ├── route/ # Route definitions │ ├── scripts/ # Example scripts (e.g., initial DB migrations) │ └── index.ts # Application entry point └── test/ # Backend tests
-
+```bash 
+ backend/
+  ├── src/
+  │   ├── config/          # Application configuration (e.g., DB, environment settings)
+  │   ├── controllers/     # API route controllers
+  │   ├── service/         # Business logic and service layer
+  │   ├── models/          # Data models/schemas
+  │   ├── dto/             # Data Transfer Objects for incoming requests
+  │   ├── resource/        # Response formatting and transformation
+  │   ├── repository/      # Data access layer (repositories)
+  │   ├── utils/           # Utility functions and helpers
+  │   ├── route/           # Route definitions
+  │   ├── scripts/         # Example scripts (e.g., initial DB migrations)
+  │   └── index.ts         # Application entry point
+  └── test/                # Backend tests
+```
 ### Frontend
 
-backend/ ├── src/ │ ├── config/ # Application configuration (e.g., DB, environment settings) │ ├── controllers/ # API route controllers │ ├── service/ # Business logic and service layer │ ├── models/ # Data models/schemas │ ├── dto/ # Data Transfer Objects for incoming requests │ ├── resource/ # Response formatting and transformation │ ├── repository/ # Data access layer (repositories) │ ├── utils/ # Utility functions and helpers │ ├── route/ # Route definitions │ ├── scripts/ # Example scripts (e.g., initial DB migrations) │ └── index.ts # Application entry point └── test/ # Backend tests
-
+```bash
+  frontend/
+  ├── assets/              # Static assets (images, fonts, etc.)
+  ├── config/              # App configuration and environment variables
+  ├── features/            # Feature-based components and pages
+  ├── common/              # Shared components, hooks, and utilities
+  ├── services/            # API calls and business logic services
+  ├── router/              # Application routing setup
+  ├── store/               # Redux state management
+  └── utils/               # Utility functions and helper modules
+```
 ## Contributing
 
  Contributions are welcome! If you’d like to contribute, please follow these steps:
