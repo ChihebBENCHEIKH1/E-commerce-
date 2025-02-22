@@ -6,6 +6,7 @@ import { ALLOWED_ORIGIN, MONGO_URI } from "./config/env";
 import cors from "cors";
 import * as Sentry from "@sentry/node";
 import "./instrument";
+import { setupSwagger } from "./config/swagger";
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use(function onError(err: any, req: any, res: any, next: any) {
 app.use(express.json());
 
 app.use(routes);
+
+setupSwagger(app);
 
 const dbUri = String(MONGO_URI);
 connectDb(dbUri);
