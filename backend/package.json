@@ -4,10 +4,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --ext ts --exec ts-node src/index.ts",
-    "build": "tsc",
+    "build": "tsc && npm run sentry:sourcemaps",
     "start": "node dist/index.js",
     "seed": "ts-node src/scripts/initialDatabaseMigration.ts",
-    "test": "nodemon --ext ts --exec ts-node tests/index.ts && npx jest"
+    "test": "nodemon --ext ts --exec ts-node tests/index.ts && npx jest",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ben-no --project node ./dist && sentry-cli sourcemaps upload --org ben-no --project node ./dist"
   },
   "keywords": [],
   "author": "",
@@ -34,7 +35,9 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@sentry/cli": "^2.42.1",
     "@sentry/node": "^9.1.0",
+    "@sentry/profiling-node": "^9.1.0",
     "@sentry/tracing": "^7.120.3",
     "@types/stripe": "^8.0.417",
     "axios": "^1.7.9",
