@@ -121,7 +121,7 @@ The Motorcycle Dealership app is designed as a modern full-stack solution for br
 The project includes Docker configurations for seamless deployment. To run both backend and frontend services using Docker Compose, execute:
  ```bash
    docker-compose up --build
-    ```
+
  ## Folder Structure
  ### Backend
 
