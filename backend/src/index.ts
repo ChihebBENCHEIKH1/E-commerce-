@@ -4,19 +4,10 @@ import routes from "./routes";
 import { connectDb } from "./utils/db";
 import { ALLOWED_ORIGIN, MONGO_URI } from "./config/env";
 import cors from "cors";
-import { initializeSentry } from "./config/sentryconfig";
 import * as Sentry from "@sentry/node";
+import "./instrument";
 
 const app = express();
-
-const { requestHandler, tracingHandler, errorHandler } = initializeSentry(app)app.use(requestHandler);
-app.use(tracingHandler);
-app.use((req: any, res, next) => {
-  if (req.user) {
-    Sentry.setUser({ id: req.user.id, email: req.user.email });
-  }
-  next();
-});
 
 app.use(json());
 app.use(
@@ -26,6 +17,12 @@ app.use(
     credentials: true,
   })
 );
+
+Sentry.setupExpressErrorHandler(app);
+app.use(function onError(err: any, req: any, res: any, next: any) {
+  res.statusCode = 500;
+  res.end(res.sentry + "\n");
+});
 app.use(express.json());
 
 app.use(routes);
