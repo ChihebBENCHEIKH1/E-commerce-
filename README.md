@@ -155,6 +155,27 @@ The project includes Docker configurations for seamless deployment. To run both 
   ├── store/               # Redux state management
   └── utils/               # Utility functions and helper modules
 ```
+
+## Demo
+
+### Login page
+
+![Screenshot from 2025-02-22 22-48-54](https://github.com/user-attachments/assets/b96fd3d0-eca8-4639-b90d-6fcfda253f15)
+
+### Home page
+
+![Screenshot from 2025-02-22 22-47-11](https://github.com/user-attachments/assets/d61b3491-f3eb-47c4-bdcb-75ced044a5f5)
+![Screenshot from 2025-02-22 22-47-17](https://github.com/user-attachments/assets/9abb4150-e20f-4522-8d3d-eee4074167d3)
+![Screenshot from 2025-02-22 22-47-21](https://github.com/user-attachments/assets/f3c099d2-18a5-48e6-9ace-3edd02f2fed5)
+
+### Side drawer
+
+![Screenshot from 2025-02-22 22-47-29](https://github.com/user-attachments/assets/97f3c10c-4835-4e12-ba68-f91a5298cb3a)
+
+### Checkout page
+
+![Screenshot from 2025-02-22 22-47-33](https://github.com/user-attachments/assets/9857fc7d-a846-4897-a93a-2301f6b36bca)
+
 ## Contributing
 
  Contributions are welcome! If you’d like to contribute, please follow these steps:
