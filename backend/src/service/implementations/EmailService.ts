@@ -23,25 +23,28 @@ export class EmailService implements IEmailService {
   }
 
   /**
-   * Sends a generic email.
+   * Sends an email with optional attachments.
    * @param email - Recipient's email address.
    * @param subject - Email subject.
    * @param text - Plain text content.
    * @param html - HTML content.
+   * @param attachments - Optional list of files to attach.
    */
   async sendEmail(
     email: string,
     subject: string,
     text: string,
-    html: string
+    html: string,
+    attachments?: { filename: string; path: string }[]
   ): Promise<void> {
     try {
       await this.transporter.sendMail({
-        from: `"Motorcycle Xpert" < ${EMAIL_USERNAME}>`,
+        from: `Motorcycle Xpert <${EMAIL_USERNAME}>`,
         to: email,
         subject,
         text,
         html,
+        attachments,
       });
       console.log(`Email sent to ${email}`);
     } catch (error) {
