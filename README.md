@@ -56,10 +56,10 @@ The Motorcycle Dealership app is designed as a modern full-stack solution for br
 
 ## Tech Stack
 
-- **Backend**: Node.js, TypeScript, Express (or a similar framework), Inversify, Stripe, Sentry.
+- **Backend**: Node.js, TypeScript, Express, Inversify, Stripe, Sentry.
 - **Frontend**: React, Redux Toolkit, Material-UI, React Router, Cypress.
 - **DevOps**: Docker, Docker Compose, Nginx, GitHub Actions.
-- **Database**: (Your chosen DB, e.g., MongoDB or PostgreSQL with migration scripts).
+- **Database**: Mongo.
 
 ## Installation
 
